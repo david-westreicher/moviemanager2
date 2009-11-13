@@ -13,7 +13,9 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -96,6 +98,7 @@ public class GMovieList extends org.eclipse.swt.widgets.Composite {
 				sc.setExpandVertical(false);
 				composite1 = new Composite(sc, SWT.NONE);
 				RowLayout rl = new RowLayout(SWT.VERTICAL);
+				rl.fill = true;
 				composite1.setLayout(rl);
 				// composite1.layout(true);
 				sc.setContent(composite1);
@@ -122,14 +125,25 @@ public class GMovieList extends org.eclipse.swt.widgets.Composite {
 	}
 
 	public void draw(List<Movie> movies) {
-		childHeight = movies.size() * MovieComposite.HEIGHT;
 		resetMovieContainer();
-		for (Movie m : movies) {
-			System.out.println(m);
-			addMovieComposite(m);
+		if (movies.size() > 50) {
+			childHeight = movies.size() *21;
+			for (Movie m : movies) {
+				addSimpleComposite(m);
+			}
+		} else {
+			childHeight = movies.size() * MovieComposite.HEIGHT;
+			for (Movie m : movies) {
+				addMovieComposite(m);
+			}
 		}
 		resize();
 		draw();
+	}
+
+	private void addSimpleComposite(Movie m) {
+		Label l = new Label(composite1, SWT.BORDER | SWT.PUSH);
+		l.setText(m.getName());
 	}
 
 	private void resize() {

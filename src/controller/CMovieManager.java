@@ -6,37 +6,37 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Text;
 
 import tools.Stoppable;
-import model.MMModel;
+import model.MMovieManager;
 import model.MMovieList;
 import model.MSearchBar;
 import movie.Movie;
 import gui.GMovieList;
-import gui.GSearchBar;
-import gui.MMGui;
+import gui.GMovieManager;
 
-public class MMController implements Stoppable, Observer {
+public class CMovieManager implements Stoppable, Observer {
 	public static final int MMHeight = 800;
 	public static final int MMWidth = 500;
 
-	private MMGui gui;
-	private MMModel model;
+	private GMovieManager gui;
+	private MMovieManager model;
 	private CSearchBar searchBar;
 	private CMovieList movieList;
 
-	public MMController(List<Movie> movies, ArrayList<String> toScan) {
-		this.gui = MMGui.showGUI();
-		this.model = new MMModel(toScan);
-		GSearchBar gsb = new GSearchBar(gui,SWT.PUSH);
-		this.searchBar = new CSearchBar(gsb, new MSearchBar(), this);
-		GMovieList gml = new GMovieList(gui,SWT.PUSH);
-		this.movieList = new CMovieList(gml, new MMovieList());
+	public CMovieManager(List<Movie> movies, ArrayList<String> toScan) {
+		this.gui = GMovieManager.showGUI();
+		this.model = new MMovieManager(toScan);
+		this.searchBar = new CSearchBar(GMovieManager.composite1,
+				new MSearchBar(), this);
+		this.movieList = new CMovieList(new GMovieList(
+				GMovieManager.composite2, SWT.NONE), new MMovieList());
 		model.addObserver(this);
 		model.scan();
-
+		gui.layout();
 		movieList.initMovies(movies);
-		MMGui.show();
+		GMovieManager.show();
 	}
 
 	public void search(String filterKey) {
@@ -51,7 +51,6 @@ public class MMController implements Stoppable, Observer {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// new movie
-		System.out.println("adding " + model.getMovie());
 		movieList.addMovie(model.getMovie());
 	}
 

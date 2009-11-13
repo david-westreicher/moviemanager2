@@ -30,10 +30,13 @@ public class MMovieList {
 		if (key.equals(""))
 			return allMovies;
 		else {
+			long start = System.currentTimeMillis();
 			List<Movie> result = new ArrayList<Movie>();
 			for (Movie m : allMovies)
 				if (m.search(key))
 					result.add(m);
+			System.out.println("searched in "
+					+ (System.currentTimeMillis() - start));
 			return result;
 		}
 	}

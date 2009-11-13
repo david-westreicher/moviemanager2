@@ -4,6 +4,7 @@ package oldgui;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -24,6 +25,7 @@ import org.eclipse.swt.SWT;
 public class MovieInformation extends org.eclipse.swt.widgets.Composite
 		implements MovieRightComposite {
 	public Label label1;
+	public ProgressBar progressBar1;
 	public Label label4;
 	public Label label3;
 	public Label label2;
@@ -77,27 +79,37 @@ public class MovieInformation extends org.eclipse.swt.widgets.Composite
 		try {
 			this.setLayout(null);
 			{
+				label2 = new Label(this, SWT.NONE);
+				label2.setText("label2");
+				FontData d = new FontData();
+				d.setHeight(8);
+				label2.setFont(new Font(Display.getDefault(),d));
+				label2.setBounds(0, 19, 348, 22);
+			}
+			{
 				label1 = new Label(this, SWT.NONE);
 				label1.setText("label1");
-				label1.setBounds(0, 0, 601, 22);
+				label1.setBounds(0, 0, 348, 22);
 				FontData fd = new FontData(Appearance.TITLE_FONT, label1
 						.getSize().y / 2, Appearance.TITLE_STYLE);
 				label1.setFont(new Font(Display.getDefault(), fd));
 			}
+			
 			{
-				label2 = new Label(this, SWT.NONE);
-				label2.setText("label2");
-				label2.setBounds(0, 32, 601, 22);
-			}
-			{
-				label3 = new Label(this, SWT.NONE);
+				label3 = new Label(this, SWT.WRAP);
 				label3.setText("label3");
-				label3.setBounds(0, 57, 601, 22);
+				label3.setBounds(0, 62, 348, 61);
 			}
 			{
 				label4 = new Label(this, SWT.NONE);
 				label4.setText("label4");
-				label4.setBounds(0, 127, 601, 22);
+				label4.setBounds(0, 127, 348, 22);
+			}
+			{
+				progressBar1 = new ProgressBar(this, SWT.SMOOTH);
+				progressBar1.setMaximum(100);
+				progressBar1.setMinimum(0);
+				progressBar1.setBounds(0, 30, 348, 30);
 			}
 			this.layout();
 			// pack();

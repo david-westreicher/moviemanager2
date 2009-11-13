@@ -7,7 +7,7 @@ import tools.Stoppable;
 import tools.StoppableRunnable;
 
 public class MSearchBar extends Observable implements Stoppable {
-	protected static final long UPDATE_TIME = 1000;
+	protected static final long UPDATE_TIME = 500;
 	private String filterKey;
 	private boolean hasChanged = false;
 	private StoppableRunnable timer;

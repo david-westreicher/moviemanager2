@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.MMModel;
+import model.MMovieManager;
 import movie.Movie;
-import gui.MMGui;
-import controller.MMController;
+import gui.GMovieManager;
+import controller.CMovieManager;
 import persistence.FileDB;
 import system.Files;
 import system.IO;
@@ -15,7 +15,7 @@ import system.OS;
 
 public class Main {
 
-	private static MMController controller;
+	private static CMovieManager controller;
 	private static List<Movie> movies;
 	private static ArrayList<String> toScan;
 
@@ -42,7 +42,7 @@ public class Main {
 	}
 
 	private static void initGUI() {
-		controller = new MMController(movies, toScan);
+		controller = new CMovieManager(movies, toScan);
 	}
 
 	private static void exit() {

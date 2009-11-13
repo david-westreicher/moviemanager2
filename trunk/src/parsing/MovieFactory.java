@@ -17,6 +17,7 @@ import org.htmlparser.util.Translate;
 
 import system.Files;
 import system.IO;
+import system.OS;
 
 public class MovieFactory {
 	public enum Search {
@@ -31,7 +32,7 @@ public class MovieFactory {
 
 	public MovieFactory(String file) {
 		this.m = new Movie();
-		m.setFileLocation(Files.MOVIE_FOLDER + "\\" + file);
+		m.setFileLocation(file);
 	}
 
 	public Movie getMovie(URL url) throws URISyntaxException, IOException {

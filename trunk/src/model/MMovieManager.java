@@ -10,17 +10,19 @@ import java.util.Observable;
 import parsing.MovieFactory;
 
 import movie.Movie;
+import system.Files;
 import system.IO;
+import system.OS;
 import tools.GUIAccess;
 import tools.Stoppable;
 
-public class MMModel extends Observable implements Stoppable {
+public class MMovieManager extends Observable implements Stoppable {
 
 	private Movie movie;
 	private boolean running;
 	private ArrayList<String> toScan;
 
-	public MMModel(ArrayList<String> toScan) {
+	public MMovieManager(ArrayList<String> toScan) {
 		this.toScan = toScan;
 		running = true;
 	}
@@ -30,11 +32,11 @@ public class MMModel extends Observable implements Stoppable {
 
 			@Override
 			public void run() {
-
 				for (String s : toScan) {
 					try {
 						if (running) {
-							Movie m = new MovieFactory(s).getMovie(s);
+							Movie m = new MovieFactory(Files.MOVIE_FOLDER
+									+ OS.SEPARATOR + s).getMovie(s);
 							if (running) {
 								setMovie(m);
 								setChanged();

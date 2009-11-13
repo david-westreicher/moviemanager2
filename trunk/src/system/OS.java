@@ -21,6 +21,7 @@ public class OS {
 		command[2] = "start";
 		command[3] = '"' + fileLocation + '"';
 		String cmd = "cmd /C explorer " + '"' + fileLocation + '"';
+		System.out.println(cmd);
 		try {
 			Runtime.getRuntime().exec(cmd);
 		} catch (IOException e) {

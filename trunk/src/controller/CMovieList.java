@@ -1,14 +1,11 @@
 package controller;
 
-import java.util.ArrayList;
+import gui.GMovieList;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
-
-import oldgui.MovieComposite;
-
-import gui.GMovieList;
 import model.MMovieList;
 import movie.Movie;
 
@@ -39,7 +36,7 @@ public class CMovieList {
 
 	public void search(String filterKey) {
 		List<Movie> result = model.search(filterKey);
-		System.out.println("found " + result.size() + " movies");
+		Collections.sort(result);
 		gui.draw(result);
 	}
 

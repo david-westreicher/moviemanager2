@@ -130,10 +130,11 @@ public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 			m.addObserver(this);
 			MovieInformation mi = (MovieInformation) mr;
 			mi.label1.setText(m.getName());
-			mi.label2.setText(Appearance.handleList(m.getDirector()));
+			mi.label2.setText(Appearance.handleList(m.getDirector())+", and written by "+Appearance.handleList(m.getWriter()));
 			mi.label3.setText(Appearance.handleList(m.getActors()));
 			if (m.getRuntime() != null)
 				mi.label4.setText(m.getRuntime());
+			mi.progressBar1.setSelection((int)(m.getRating()*10));
 			m.loadImg();
 		} else {
 			final MovieChooser mc = (MovieChooser) mr;
@@ -150,7 +151,6 @@ public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 	private void initGUI(Movie movie) {
 		try {
 			this.setLayout(null);
-			setSize(WIDTH, HEIGHT);
 			{
 				label1 = new Label(this, SWT.NONE);
 				label1.setBounds(12, 12, 96, 141);
@@ -184,9 +184,10 @@ public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 					mc.setSize(368, 141);
 					mr = mc;
 				}
-				mr.setBounds(120, 12, 368, 141);
+				mr.setBounds(120, 12, 355, 141);
 			}
 			this.layout();
+			pack();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -196,12 +197,12 @@ public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 == null) {
 			// download complete
-			Display.getDefault().syncExec(new Runnable() {
-				public void run() {
-					if (!label1.isDisposed())
+			//Display.getDefault().syncExec(new Runnable() {
+			//	public void run() {
+			//		if (!label1.isDisposed())
 						label1.setImage(new Image(display, m.getCoverLocal()));
-				}
-			});
+			//	}
+			//});
 		} else {
 			init(mc.getMovie());
 		}

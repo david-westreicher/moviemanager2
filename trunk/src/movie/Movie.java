@@ -9,8 +9,10 @@ import java.util.Observable;
 
 import system.IO;
 import system.OS;
+import tools.GUIAccess;
 
-public class Movie extends Observable implements Serializable {
+public class Movie extends Observable implements Serializable,
+		Comparable<Movie> {
 
 	/**
 	 * 
@@ -206,26 +208,37 @@ public class Movie extends Observable implements Serializable {
 	}
 
 	public void loadImg() {
-		if (coverURL != null) {
+		if (coverURL != null && coverLocal == null) {
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
 					try {
-						if (coverLocal == null)
-							coverLocal = IO.downloadToFile(coverURL, this
-									.hashCode()
-									+ ".jpg");
+						coverLocal = IO.downloadToFile(coverURL, this
+								.hashCode()
+								+ ".jpg");
 					} catch (MalformedURLException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					setChanged();
-					notifyObservers();
+					new GUIAccess() {
+						@Override
+						protected void execute() {
+							downloadComplete();
+						}
+					};
 				}
 			}) {
 			}.start();
 		}
+		if (coverLocal != null) {
+			downloadComplete();
+		}
+	}
+
+	protected void downloadComplete() {
+		setChanged();
+		notifyObservers();
 	}
 
 	public void setFileLocation(String loc) {
@@ -233,7 +246,7 @@ public class Movie extends Observable implements Serializable {
 	}
 
 	public void play() {
-		System.out.println("opening " + fileLocation);
+		System.out.println("playing " + this);
 		OS.start(fileLocation);
 	}
 
@@ -276,5 +289,10 @@ public class Movie extends Observable implements Serializable {
 			if (s != null && s.toLowerCase().contains(key))
 				return true;
 		return false;
+	}
+
+	@Override
+	public int compareTo(Movie o) {
+		return	Float.compare(o.rating, rating);
 	}
 }

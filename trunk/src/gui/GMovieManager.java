@@ -2,14 +2,18 @@ package gui;
 
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.SWT;
 
-import controller.MMController;
+import controller.CMovieManager;
 
 
 /**
@@ -24,11 +28,13 @@ import controller.MMController;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class MMGui extends org.eclipse.swt.widgets.Composite {
+public class GMovieManager extends org.eclipse.swt.widgets.Composite {
 
 	private static Display display;
 	private static Shell shell;
-	private static MMGui instance;
+	public static Composite composite2;
+	public static Composite composite1;
+	private static GMovieManager instance;
 
 	/**
 	 * Auto-generated main method to display this
@@ -51,10 +57,10 @@ public class MMGui extends org.eclipse.swt.widgets.Composite {
 	 * 
 	 * @return
 	 */
-	public static MMGui showGUI() {
+	public static GMovieManager showGUI() {
 		display = Display.getDefault();
 		shell = new Shell(display);
-		instance = new MMGui(shell, SWT.NULL);
+		instance = new GMovieManager(shell, SWT.NULL);
 		Point size = instance.getSize();
 		shell.setLayout(new FillLayout());
 		shell.layout();
@@ -69,6 +75,9 @@ public class MMGui extends org.eclipse.swt.widgets.Composite {
 	}
 
 	public static void show() {
+		//composite1.pack();
+		composite1.layout();
+		composite2.layout();
 		instance.layout();
 		shell.open();
 		while (!shell.isDisposed()) {
@@ -77,16 +86,27 @@ public class MMGui extends org.eclipse.swt.widgets.Composite {
 		}
 	}
 
-	public MMGui(org.eclipse.swt.widgets.Composite parent, int style) {
+	public GMovieManager(org.eclipse.swt.widgets.Composite parent, int style) {
 		super(parent, style);
 		initGUI();
 	}
 
 	private void initGUI() {
 		try {
-			this.setSize(MMController.MMWidth, MMController.MMHeight);
-			RowLayout thisLayout = new RowLayout(org.eclipse.swt.SWT.HORIZONTAL);
-			this.setLayout(thisLayout);
+			this.setSize(CMovieManager.MMWidth, CMovieManager.MMHeight);
+			this.setLayout(null);
+			{
+				composite1 = new Composite(this, SWT.NONE);
+				FillLayout composite1Layout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);
+				composite1.setLayout(composite1Layout);
+				composite1.setBounds(0, 0, 500, 64);
+			}
+			{
+				composite2 = new Composite(this, SWT.NONE);
+				FillLayout composite2Layout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);
+				composite2.setLayout(composite2Layout);
+				composite2.setBounds(0, 76, 500, 724);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

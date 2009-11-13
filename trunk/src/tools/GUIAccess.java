@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Display;
 public abstract class GUIAccess {
 
 	public GUIAccess() {
-		Display.getDefault().syncExec(new Runnable() {
+		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
 				execute();
 			}

@@ -1,7 +1,6 @@
-package movie;
+package system;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,8 +8,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import javax.imageio.ImageIO;
+
+import org.eclipse.swt.graphics.Rectangle;
+
 public class IO {
-	public static String MOVIE_FOLDER = "G:\\filme";
 
 	public static StringBuffer downloadText(String strURL) throws IOException {
 		URLConnection urlc = new URL(strURL).openConnection();
@@ -27,7 +29,7 @@ public class IO {
 
 	public static String downloadToFile(String strURL, String toFile)
 			throws MalformedURLException, IOException {
-		String dest = "C://mm/" + toFile;
+		String dest = Files.DOWNLOAD_FOLDER + toFile;
 		InputStream in = new URL(strURL).openStream();
 		FileOutputStream out = new FileOutputStream(dest);
 		byte[] buf = new byte[4 * 1024];

@@ -1,21 +1,24 @@
-package core;
+package parsing;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import movie.IO;
 import movie.Movie;
 
 import org.htmlparser.Node;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.Translate;
 
-public class MovieFactoryNew {
+import system.Files;
+import system.IO;
+
+public class MovieFactory {
 	public enum Search {
 		KEY, URL
 	};
@@ -26,17 +29,18 @@ public class MovieFactoryNew {
 	private Movie m;
 	private long startTime;
 
-	public Movie getMovie() {
-		return m;
+	public MovieFactory(String file) {
+		this.m = new Movie();
+		m.setFileLocation(Files.MOVIE_FOLDER + "\\" + file);
 	}
 
-	public MovieFactoryNew(URL url) throws IOException, URISyntaxException {
-
-		m = new Movie();
+	public Movie getMovie(URL url) throws URISyntaxException, IOException {
 		System.out.println("browsing to: " + url.toURI().toString());
 		m.setImdbURL(url.toURI().toString());
 		startTimer();
 		this.site = getData(url).toString().replaceAll("\\s\\s+|\\n|\\r", "");
+		site = site.replaceAll("<p>", "");
+		site = site.replaceAll("</p>", "");
 		site = Translate.decode(site);
 		stopTimer("Downloaded site in ");
 		startTimer();
@@ -139,14 +143,15 @@ public class MovieFactoryNew {
 						Node par = node.getParent();
 						if (txt.startsWith("Director")) {
 							log("Director");
-							new AbstractPerform(par.getChildren()
-									.extractAllNodesThatMatch(
-											new TagNameFilter("a"))) {
+							new AbstractRecursivePerform(par.getChildren()) {
 								@Override
 								public void perform(Node node) {
-									m.addDirector(node.getFirstChild()
-											.getText());
-									log(node.getFirstChild().getText());
+									if (node.getText().startsWith("a")
+											&& node.getFirstChild() != null) {
+										m.addDirector(node.getFirstChild()
+												.getText());
+										log(node.getFirstChild().getText());
+									}
 								}
 							};
 						} else if (txt.startsWith("Writer")) {
@@ -156,24 +161,40 @@ public class MovieFactoryNew {
 											new TagNameFilter("a"))) {
 								@Override
 								public void perform(Node node) {
-									m.addWriter(node.getFirstChild().getText());
-									log(node.getFirstChild().getText());
+									if (node.getFirstChild() != null) {
+										m.addWriter(node.getFirstChild()
+												.getText());
+										log(node.getFirstChild().getText());
+									}
 								}
 							};
 						} else if (txt.startsWith("Release Date")) {
-							m.setReleaseDate(node.getNextSibling().getText()
-									.replaceAll("\n\b\r\t ", ""));
-							log(node.getNextSibling().getText().replaceAll(
-									"\n\b\r\t ", ""));
-						} else if (txt.startsWith("Genre")) {
-							log("Genre:");
-							new AbstractPerform(par.getChildren()
-									.extractAllNodesThatMatch(
-											new TagNameFilter("a"))) {
+							new AbstractRecursivePerform(node.getNextSibling()
+									.getChildren()) {
 								@Override
 								public void perform(Node node) {
-									m.addGenre(node.getFirstChild().getText());
-									log(node.getFirstChild().getText());
+									if (node.getText().startsWith("p")
+											&& node.getFirstChild() != null) {
+										m.setReleaseDate(node.getFirstChild()
+												.getText().replaceAll(
+														"\n\b\r\t ", ""));
+										log(node.getFirstChild().getText()
+												.replaceAll("\n\b\r\t ", ""));
+									}
+								}
+							};
+
+						} else if (txt.startsWith("Genre")) {
+							log("Genre:");
+							new AbstractRecursivePerform(par.getChildren()) {
+								@Override
+								public void perform(Node node) {
+									if (node.getText().startsWith("a")
+											&& node.getFirstChild() != null) {
+										m.addGenre(node.getFirstChild()
+												.getText());
+										log(node.getFirstChild().getText());
+									}
 								}
 							};
 						} else if (txt.startsWith("Tagline")) {
@@ -200,35 +221,43 @@ public class MovieFactoryNew {
 							};
 						} else if (txt.startsWith("Plot")) {
 							log("Plot");
-							m.setPlot(node.getNextSibling().getText());
-							log(node.getNextSibling().getText());
+							new AbstractRecursivePerform(node.getNextSibling()
+									.getChildren()) {
+								@Override
+								public void perform(Node node) {
+									m.setPlot(node.getText());
+									log(node.getText());
+								}
+							};
+
 						} else if (txt.startsWith("Runtime")) {
 							log("Runtime:");
 							m.setRuntime(node.getNextSibling().getText());
 							log(node.getNextSibling().getText());
 						} else if (txt.startsWith("Countr")) {
 							log("Country:");
-							new AbstractPerform(par.getChildren()
-									.extractAllNodesThatMatch(
-											new TagNameFilter("a"))) {
+							new AbstractRecursivePerform(par.getChildren()) {
 								@Override
 								public void perform(Node node) {
-									m
-											.addCountry(node.getFirstChild()
-													.getText());
-									log(node.getFirstChild().getText());
+									if (node.getText().startsWith("a")
+											&& node.getFirstChild() != null) {
+										m.addCountry(node.getFirstChild()
+												.getText());
+										log(node.getFirstChild().getText());
+									}
 								}
 							};
 						} else if (txt.startsWith("Movie Connection")) {
 							log("Movie Connections:");
-							new AbstractPerform(par.getChildren()
-									.extractAllNodesThatMatch(
-											new TagNameFilter("a"))) {
+							new AbstractRecursivePerform(par.getChildren()) {
 								@Override
 								public void perform(Node node) {
-									m.addMovieConnection(node.getFirstChild()
-											.getText());
-									log(node.getFirstChild().getText());
+									if (node.getText().startsWith("a")
+											&& node.getFirstChild() != null) {
+										m.addMovieConnection(node
+												.getFirstChild().getText());
+										log(node.getFirstChild().getText());
+									}
 								}
 							};
 						}
@@ -265,7 +294,10 @@ public class MovieFactoryNew {
 			m.setDecided(false);
 			for (String s : sites)
 				m.addPossibleSite(s);
+			m = new MovieFactory(m.getFileLocation()).getMovie(new URL(m
+					.getPossibleSites().get(0)));
 		}
+		return m;
 	}
 
 	private void stopTimer(String string) {
@@ -281,9 +313,10 @@ public class MovieFactoryNew {
 			System.out.println(s);
 	}
 
-	public MovieFactoryNew(String key) throws IOException, URISyntaxException {
-		this(new URL(IMDB_SEARCH + format(key)));
-		m.setFileLocation(IO.MOVIE_FOLDER + "\\" + key);
+	public Movie getMovie(String key) throws MalformedURLException,
+			URISyntaxException, IOException {
+		String url = IMDB_SEARCH + format(key);
+		return getMovie(new URL(url));
 	}
 
 	private static String format(String key) {

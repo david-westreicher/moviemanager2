@@ -1,6 +1,4 @@
-package gui;
-
-import javax.naming.ldap.Control;
+package oldgui;
 
 public interface MovieRightComposite{
 

@@ -1,4 +1,4 @@
-package gui;
+package oldgui;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -15,6 +15,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+
+import system.IO;
 
 import com.cloudgarden.resource.SWTResourceManager;
 
@@ -153,7 +155,8 @@ public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 				label1 = new Label(this, SWT.NONE);
 				label1.setBounds(12, 12, 96, 141);
 				if (movie.getCoverLocal() == null)
-					label1.setImage(new Image(display, "C://mm/poster.jpg"));
+					label1.setImage(new Image(display, IO.class
+							.getResourceAsStream("../res/poster.jpg")));
 				else
 					label1.setImage(new Image(display, movie.getCoverLocal()));
 				label1.addMouseListener(new MouseListener() {

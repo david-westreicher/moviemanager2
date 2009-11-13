@@ -1,12 +1,8 @@
-package controller;
+package mvcMovieList;
 
-import gui.GMovieList;
-
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import model.MMovieList;
 import movie.Movie;
 
 public class CMovieList {

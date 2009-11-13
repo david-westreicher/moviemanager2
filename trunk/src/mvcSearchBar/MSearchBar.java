@@ -1,4 +1,4 @@
-package model;
+package mvcSearchBar;
 
 import java.util.Observable;
 

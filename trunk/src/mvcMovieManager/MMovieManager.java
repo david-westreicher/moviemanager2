@@ -1,8 +1,6 @@
-package model;
+package mvcMovieManager;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -11,7 +9,6 @@ import parsing.MovieFactory;
 
 import movie.Movie;
 import system.Files;
-import system.IO;
 import system.OS;
 import tools.GUIAccess;
 import tools.Stoppable;

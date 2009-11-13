@@ -1,4 +1,4 @@
-package controller;
+package mvcSearchBar;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Text;
 
 import tools.Stoppable;
 
-import model.MSearchBar;
+import mvcMovieManager.CMovieManager;
 
 public class CSearchBar implements ModifyListener, Observer, Stoppable {
 

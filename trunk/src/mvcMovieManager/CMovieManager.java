@@ -1,4 +1,4 @@
-package controller;
+package mvcMovieManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,15 +6,15 @@ import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Text;
+
 
 import tools.Stoppable;
-import model.MMovieManager;
-import model.MMovieList;
-import model.MSearchBar;
 import movie.Movie;
-import gui.GMovieList;
-import gui.GMovieManager;
+import mvcMovieList.CMovieList;
+import mvcMovieList.GMovieList;
+import mvcMovieList.MMovieList;
+import mvcSearchBar.CSearchBar;
+import mvcSearchBar.MSearchBar;
 
 public class CMovieManager implements Stoppable, Observer {
 	public static final int MMHeight = 800;

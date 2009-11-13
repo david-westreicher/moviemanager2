@@ -4,13 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.MMovieManager;
 import movie.Movie;
-import gui.GMovieManager;
-import controller.CMovieManager;
+import mvcMovieManager.CMovieManager;
 import persistence.FileDB;
 import system.Files;
-import system.IO;
 import system.OS;
 
 public class Main {

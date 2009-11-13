@@ -15,10 +15,6 @@ import org.htmlparser.Node;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.Translate;
 
-import system.Files;
-import system.IO;
-import system.OS;
-
 public class MovieFactory {
 	public enum Search {
 		KEY, URL

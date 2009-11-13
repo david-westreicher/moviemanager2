@@ -1,4 +1,4 @@
-package model;
+package mvcMovieList;
 
 import java.util.ArrayList;
 import java.util.List;

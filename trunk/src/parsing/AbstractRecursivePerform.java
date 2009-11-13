@@ -1,4 +1,4 @@
-package core;
+package parsing;
 
 import org.htmlparser.Node;
 import org.htmlparser.util.NodeList;

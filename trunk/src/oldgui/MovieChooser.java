@@ -1,4 +1,4 @@
-package gui;
+package oldgui;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -12,22 +12,19 @@ import java.util.Observer;
 import movie.Movie;
 
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 
-import core.MovieFactory;
+import parsing.MovieFactory;
+
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -73,6 +70,11 @@ public class MovieChooser extends org.eclipse.swt.widgets.Composite implements
 		Shell shell = new Shell(display);
 		MovieChooser inst = new MovieChooser(shell, SWT.NULL);
 		inst.setMovies(new ArrayList<String>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			{
 				add("www.google.at");
 				add("www.google.at");

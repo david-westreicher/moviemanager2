@@ -1,21 +1,21 @@
 package movie;
 
-import gui.MovieComposite;
-
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Scanner;
 
-import core.MovieFactory;
+import system.IO;
+import system.OS;
 
 public class Movie extends Observable implements Serializable {
-	private static final long serialVersionUID = 2771998539682906756L;
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5509501910602298144L;
 
 	private List<List<String>> searchable;
 
@@ -187,11 +187,13 @@ public class Movie extends Observable implements Serializable {
 	public String toString() {
 		return "Movie [actors=" + actors + ", country=" + country
 				+ ", coverLocal=" + coverLocal + ", coverURL=" + coverURL
-				+ ", director=" + director + ", fileLocation=" + fileLocation
-				+ ", genre=" + genre + ", imdbURL=" + imdbURL + ", keywords="
-				+ keywords + ", movieConnections=" + movieConnections
-				+ ", name=" + name + ", plot=" + plot + ", rating=" + rating
-				+ ", releaseDate=" + releaseDate + ", runtime=" + runtime
+				+ ", decided=" + decided + ", director=" + director
+				+ ", fileLocation=" + fileLocation + ", genre=" + genre
+				+ ", imdbURL=" + imdbURL + ", keywords=" + keywords
+				+ ", movieConnections=" + movieConnections + ", name=" + name
+				+ ", plot=" + plot + ", possibleSites=" + possibleSites
+				+ ", rating=" + rating + ", releaseDate=" + releaseDate
+				+ ", runtime=" + runtime + ", searchable=" + searchable
 				+ ", tagline=" + tagline + ", writer=" + writer + "]";
 	}
 

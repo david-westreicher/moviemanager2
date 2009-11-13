@@ -1,23 +1,12 @@
-package gui;
+package oldgui;
 
-import movie.Movie;
-import movie.OS;
 
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.RowData;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.events.ControlListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.SWT;
@@ -32,11 +21,12 @@ import org.eclipse.swt.SWT;
  * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
-public class MovieLink extends org.eclipse.swt.widgets.Composite {
-	public static final int HEIGHT = 40;
-	public static final int WIDTH = 300;
-	private Button button1;
-	public Button button2;
+public class MovieInformation extends org.eclipse.swt.widgets.Composite
+		implements MovieRightComposite {
+	public Label label1;
+	public Label label4;
+	public Label label3;
+	public Label label2;
 
 	/**
 	 * Auto-generated main method to display this
@@ -60,13 +50,13 @@ public class MovieLink extends org.eclipse.swt.widgets.Composite {
 	public static void showGUI() {
 		Display display = Display.getDefault();
 		Shell shell = new Shell(display);
-		MovieLink inst = new MovieLink(shell, SWT.NULL,null);
+		MovieInformation inst = new MovieInformation(shell, SWT.NULL);
 		Point size = inst.getSize();
 		shell.setLayout(new FillLayout());
 		shell.layout();
 		if (size.x == 0 && size.y == 0) {
-			inst.pack();
-			shell.pack();
+			// inst.pack();
+			// shell.pack();
 		} else {
 			Rectangle shellBounds = shell.computeTrim(0, 0, size.x, size.y);
 			shell.setSize(shellBounds.width, shellBounds.height);
@@ -78,45 +68,39 @@ public class MovieLink extends org.eclipse.swt.widgets.Composite {
 		}
 	}
 
-	public MovieLink(org.eclipse.swt.widgets.Composite parent, int style,
-			String url) {
+	public MovieInformation(org.eclipse.swt.widgets.Composite parent, int style) {
 		super(parent, style);
 		initGUI();
-		initButtons(url);
-		pack();
-	}
-
-	private void initButtons(final String url) {
-		button1.setText(url);
-		button1.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-			}
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				OS.browse(url);
-			}
-		});
 	}
 
 	private void initGUI() {
 		try {
-			RowLayout thisLayout = new RowLayout(org.eclipse.swt.SWT.HORIZONTAL);
-			this.setLayout(thisLayout);
-			this.setSize(100,20);
+			this.setLayout(null);
 			{
-				button1 = new Button(this, SWT.PUSH | SWT.CENTER);
-				RowData button1LData = new RowData();
-				button1.setLayoutData(button1LData);
-				button1.setText("goto: name");
+				label1 = new Label(this, SWT.NONE);
+				label1.setText("label1");
+				label1.setBounds(0, 0, 601, 22);
+				FontData fd = new FontData(Appearance.TITLE_FONT, label1
+						.getSize().y / 2, Appearance.TITLE_STYLE);
+				label1.setFont(new Font(Display.getDefault(), fd));
 			}
 			{
-				button2 = new Button(this, SWT.PUSH | SWT.CENTER);
-				RowData button2LData = new RowData();
-				button2.setLayoutData(button2LData);
-				button2.setText("set");
+				label2 = new Label(this, SWT.NONE);
+				label2.setText("label2");
+				label2.setBounds(0, 32, 601, 22);
+			}
+			{
+				label3 = new Label(this, SWT.NONE);
+				label3.setText("label3");
+				label3.setBounds(0, 57, 601, 22);
+			}
+			{
+				label4 = new Label(this, SWT.NONE);
+				label4.setText("label4");
+				label4.setBounds(0, 127, 601, 22);
 			}
 			this.layout();
+			// pack();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -13,5 +13,6 @@ public class Files {
 			+ OS.SEPARATOR + Files.DATA_FOLDER;
 	public static final String DATABASE_FILE = DATABASE_FOLDER + OS.SEPARATOR
 			+ FILE_NAME;
+	public static final String NO_POSTER = "../ress/poster.jpg";
 
 }

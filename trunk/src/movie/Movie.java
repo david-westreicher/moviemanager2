@@ -246,7 +246,6 @@ public class Movie extends Observable implements Serializable,
 	}
 
 	public void play() {
-		System.out.println("playing " + this);
 		OS.start(fileLocation);
 	}
 

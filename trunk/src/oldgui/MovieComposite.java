@@ -1,6 +1,7 @@
 package oldgui;
 
 import java.util.Observable;
+import mvcMovieComposite.GMovieInformationSWT;
 import java.util.Observer;
 
 import movie.Movie;
@@ -8,6 +9,8 @@ import movie.Movie;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -16,7 +19,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+import system.Files;
 import system.IO;
+import system.OS;
 
 import com.cloudgarden.resource.SWTResourceManager;
 
@@ -33,7 +38,7 @@ import com.cloudgarden.resource.SWTResourceManager;
 public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 		Observer {
 
-	public static final int HEIGHT = 165;
+	public static final float HEIGHT = 162f;
 	private MovieRightComposite mr;
 	public static final int WIDTH = 500;
 
@@ -49,73 +54,10 @@ public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 	private MovieChooser mc;
 
 	/**
-	 * Auto-generated main method to display this
-	 * org.eclipse.swt.widgets.Composite inside a new Shell.
-	 */
-	public static void main(String[] args) {
-		Movie movie = new Movie();
-		movie.setName("Title");
-		movie.setFileLocation("G:\\filme\\21 Gramm");
-		movie.addDirector("Quentin Tarantino");
-		movie.addDirector("Stanley Kubrick");
-		movie.addActor("Actor Actress");
-		movie.addActor("Actor Actress");
-		movie.addActor("Actor Actress");
-		movie.addActor("Actor Actress");
-		movie.addActor("Actor Actress");
-		movie.addActor("Actor Actress");
-		movie.addActor("Actor Actress");
-		movie.setRuntime("64 min");
-		movie.setDecided(false);
-		movie.addPossibleSite("/tt1298826/");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		movie.addPossibleSite("test");
-		showGUI(movie);
-	}
-
-	/**
 	 * Overriding checkSubclass allows this class to extend
 	 * org.eclipse.swt.widgets.Composite
 	 */
 	protected void checkSubclass() {
-	}
-
-	/**
-	 * Auto-generated method to display this org.eclipse.swt.widgets.Composite
-	 * inside a new Shell.
-	 */
-	public static void showGUI(Movie mov) {
-		display = Display.getDefault();
-		Shell shell = new Shell(display);
-		MovieComposite inst = new MovieComposite(shell, SWT.NULL | SWT.BORDER,
-				mov);
-		Point size = inst.getSize();
-		shell.setLayout(new FillLayout());
-		shell.layout();
-		if (size.x == 0 && size.y == 0) {
-			// inst.pack();
-			// shell.pack();
-		} else {
-			Rectangle shellBounds = shell.computeTrim(0, 0, size.x, size.y);
-			shell.setSize(shellBounds.width, shellBounds.height);
-		}
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
 	}
 
 	public MovieComposite(org.eclipse.swt.widgets.Composite parent, int style,
@@ -128,13 +70,24 @@ public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 		this.m = m;
 		if (m.isDecided()) {
 			m.addObserver(this);
-			MovieInformation mi = (MovieInformation) mr;
+			GMovieInformationSWT mi = (GMovieInformationSWT) mr;
 			mi.label1.setText(m.getName());
-			mi.label2.setText(Appearance.handleList(m.getDirector())+", and written by "+Appearance.handleList(m.getWriter()));
+			mi.label2.setText(Appearance.handleList(m.getDirector())
+					+ ", and written by "
+					+ Appearance.handleList(m.getWriter()));
 			mi.label3.setText(Appearance.handleList(m.getActors()));
 			if (m.getRuntime() != null)
 				mi.label4.setText(m.getRuntime());
-			mi.progressBar1.setSelection((int)(m.getRating()*10));
+			mi.progressBar1.setSelection((int) (m.getRating() * 10));
+			mi.button1.addSelectionListener(new SelectionListener() {
+				@Override
+				public void widgetDefaultSelected(SelectionEvent arg0) {
+				}
+				@Override
+				public void widgetSelected(SelectionEvent arg0) {
+					OS.browse(m.getImdbURL());
+				}
+			});
 			m.loadImg();
 		} else {
 			final MovieChooser mc = (MovieChooser) mr;
@@ -155,8 +108,8 @@ public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 				label1 = new Label(this, SWT.NONE);
 				label1.setBounds(12, 12, 96, 141);
 				if (movie.getCoverLocal() == null)
-					label1.setImage(new Image(display, IO.class
-							.getResourceAsStream("../res/poster.jpg")));
+					label1.setImage(new Image(display, IO
+							.getImage(Files.NO_POSTER)));
 				else
 					label1.setImage(new Image(display, movie.getCoverLocal()));
 				label1.addMouseListener(new MouseListener() {
@@ -178,7 +131,7 @@ public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 				if (movie.isDecided()) {
 					if (mc != null)
 						mc.dispose();
-					mr = new MovieInformation(this, SWT.NONE);
+					mr = new GMovieInformationSWT(this, SWT.NONE);
 				} else {
 					mc = new MovieChooser(this, SWT.BORDER);
 					mc.setSize(368, 141);
@@ -197,12 +150,12 @@ public class MovieComposite extends org.eclipse.swt.widgets.Composite implements
 	public void update(Observable arg0, Object arg1) {
 		if (arg1 == null) {
 			// download complete
-			//Display.getDefault().syncExec(new Runnable() {
-			//	public void run() {
-			//		if (!label1.isDisposed())
-						label1.setImage(new Image(display, m.getCoverLocal()));
-			//	}
-			//});
+			// Display.getDefault().syncExec(new Runnable() {
+			// public void run() {
+			// if (!label1.isDisposed())
+			label1.setImage(new Image(display, m.getCoverLocal()));
+			// }
+			// });
 		} else {
 			init(mc.getMovie());
 		}

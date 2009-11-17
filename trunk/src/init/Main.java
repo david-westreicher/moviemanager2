@@ -6,15 +6,18 @@ import java.util.List;
 
 import movie.Movie;
 import mvcMovieManager.CMovieManager;
+import mvcMovieManager.CMovieManagerSWT;
+import mvcMovieManager.CMovieManagerSwing;
 import persistence.FileDB;
 import system.Files;
 import system.OS;
+import system.Settings;
 
 public class Main {
 
 	private static CMovieManager controller;
 	private static List<Movie> movies;
-	private static ArrayList<String> toScan;
+	private static List<String> toScan;
 
 	/**
 	 * @param args
@@ -27,27 +30,33 @@ public class Main {
 		} else {
 			fastLoad();
 		}
-		// looping
+		// looping if SWT
 		initGUI();
-		// exit
-		saveDB();
-		exit();
+		if (Settings.CURRENT_STYLE == Settings.GuiStyle.SWT) {
+			// exit
+			saveDB();
+			exit();
+		}
 	}
 
 	private static void settings() {
-
+		Settings.CURRENT_STYLE = Settings.GuiStyle.SWING;
 	}
 
 	private static void initGUI() {
-		controller = new CMovieManager(movies, toScan);
+		if (Settings.CURRENT_STYLE == Settings.GuiStyle.SWT)
+			controller = new CMovieManagerSWT(movies, toScan);
+		else if (Settings.CURRENT_STYLE == Settings.GuiStyle.SWING)
+			controller = new CMovieManagerSwing(movies, toScan);
 	}
 
-	private static void exit() {
+	public static void exit() {
 		System.out.println("exiting MM");
-		controller.stop();
+		if (Settings.CURRENT_STYLE == Settings.GuiStyle.SWT)
+			controller.stop();
 	}
 
-	private static void saveDB() {
+	public static void saveDB() {
 		System.out.println("saving to DB");
 		FileDB.store(controller.getMovies());
 	}
@@ -63,7 +72,8 @@ public class Main {
 
 	private static void folderStructure() {
 		System.out.println("slow-loading the movies");
-		toScan = new ArrayList<String>(OS.getFolders(Files.MOVIE_FOLDER));
+		toScan = OS.getFolders(Files.MOVIE_FOLDER);
+		System.out.println(toScan);
 	}
 
 	private static boolean firstStart() {
@@ -73,5 +83,8 @@ public class Main {
 
 	private static void init() {
 		System.out.println("Starting MM");
+		if (!OS.fileExists(Files.DOWNLOAD_FOLDER)) {
+			OS.makeFolder(Files.DOWNLOAD_FOLDER);
+		}
 	}
 }

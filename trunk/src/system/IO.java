@@ -7,6 +7,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.eclipse.swt.graphics.Rectangle;
+
 public class IO {
 
 	public static StringBuffer downloadText(String strURL) throws IOException {
@@ -37,4 +39,7 @@ public class IO {
 		return dest;
 	}
 
+	public static InputStream getImage(String img) {
+		return IO.class.getResourceAsStream(img);
+	}
 }

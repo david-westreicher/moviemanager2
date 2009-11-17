@@ -2,7 +2,7 @@ package mvcMovieManager;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 import parsing.MovieFactory;
@@ -17,16 +17,15 @@ public class MMovieManager extends Observable implements Stoppable {
 
 	private Movie movie;
 	private boolean running;
-	private ArrayList<String> toScan;
+	private List<String> toScan;
 
-	public MMovieManager(ArrayList<String> toScan) {
-		this.toScan = toScan;
+	public MMovieManager(List<String> toScan2) {
+		this.toScan = toScan2;
 		running = true;
 	}
 
 	public void scan() {
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				for (String s : toScan) {

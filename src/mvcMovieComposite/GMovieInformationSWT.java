@@ -1,7 +1,13 @@
-package oldgui;
+package mvcMovieComposite;
 
+
+import oldgui.Appearance;
+import oldgui.MovieRightComposite;
 
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
@@ -22,9 +28,10 @@ import org.eclipse.swt.SWT;
  * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
-public class MovieInformation extends org.eclipse.swt.widgets.Composite
+public class GMovieInformationSWT extends org.eclipse.swt.widgets.Composite
 		implements MovieRightComposite {
 	public Label label1;
+	public Button button1;
 	public ProgressBar progressBar1;
 	public Label label4;
 	public Label label3;
@@ -52,7 +59,7 @@ public class MovieInformation extends org.eclipse.swt.widgets.Composite
 	public static void showGUI() {
 		Display display = Display.getDefault();
 		Shell shell = new Shell(display);
-		MovieInformation inst = new MovieInformation(shell, SWT.NULL);
+		GMovieInformationSWT inst = new GMovieInformationSWT(shell, SWT.NULL);
 		Point size = inst.getSize();
 		shell.setLayout(new FillLayout());
 		shell.layout();
@@ -70,46 +77,78 @@ public class MovieInformation extends org.eclipse.swt.widgets.Composite
 		}
 	}
 
-	public MovieInformation(org.eclipse.swt.widgets.Composite parent, int style) {
+	public GMovieInformationSWT(org.eclipse.swt.widgets.Composite parent, int style) {
 		super(parent, style);
 		initGUI();
 	}
 
 	private void initGUI() {
 		try {
-			this.setLayout(null);
+			GridLayout thisLayout = new GridLayout();
+			thisLayout.numColumns = 2;
+			this.setLayout(thisLayout);
+			{
+				label1 = new Label(this, SWT.NONE);
+				label1.setText("label1");
+				GridData label1LData = new GridData();
+				label1LData.horizontalAlignment = GridData.FILL;
+				label1LData.grabExcessHorizontalSpace = true;
+				label1LData.verticalAlignment = GridData.BEGINNING;
+				label1LData.horizontalSpan = 2;
+				label1.setLayoutData(label1LData);
+				FontData fd = new FontData(Appearance.TITLE_FONT, 11, Appearance.TITLE_STYLE);
+				label1.setFont(new Font(Display.getDefault(), fd));
+			}
 			{
 				label2 = new Label(this, SWT.NONE);
 				label2.setText("label2");
 				FontData d = new FontData();
 				d.setHeight(8);
 				label2.setFont(new Font(Display.getDefault(),d));
-				label2.setBounds(0, 19, 348, 22);
+				GridData label2LData = new GridData();
+				label2LData.verticalAlignment = GridData.BEGINNING;
+				label2LData.grabExcessHorizontalSpace = true;
+				label2LData.horizontalAlignment = GridData.FILL;
+				label2LData.horizontalSpan = 2;
+				label2.setLayoutData(label2LData);
 			}
-			{
-				label1 = new Label(this, SWT.NONE);
-				label1.setText("label1");
-				label1.setBounds(0, 0, 348, 22);
-				FontData fd = new FontData(Appearance.TITLE_FONT, label1
-						.getSize().y / 2, Appearance.TITLE_STYLE);
-				label1.setFont(new Font(Display.getDefault(), fd));
-			}
-			
 			{
 				label3 = new Label(this, SWT.WRAP);
 				label3.setText("label3");
-				label3.setBounds(0, 62, 348, 61);
-			}
-			{
-				label4 = new Label(this, SWT.NONE);
-				label4.setText("label4");
-				label4.setBounds(0, 127, 348, 22);
+				GridData label3LData = new GridData();
+				label3LData.verticalAlignment = GridData.FILL;
+				label3LData.horizontalAlignment = GridData.FILL;
+				label3LData.grabExcessHorizontalSpace = true;
+				label3LData.horizontalSpan = 2;
+				label3.setLayoutData(label3LData);
 			}
 			{
 				progressBar1 = new ProgressBar(this, SWT.SMOOTH);
 				progressBar1.setMaximum(100);
 				progressBar1.setMinimum(0);
-				progressBar1.setBounds(0, 30, 348, 30);
+				GridData progressBar1LData = new GridData();
+				progressBar1LData.verticalAlignment = GridData.END;
+				progressBar1LData.horizontalAlignment = GridData.FILL;
+				progressBar1LData.grabExcessHorizontalSpace = true;
+				progressBar1LData.horizontalSpan = 2;
+				progressBar1.setLayoutData(progressBar1LData);
+			}
+			{
+				label4 = new Label(this, SWT.NONE);
+				label4.setText("label4");
+				GridData label4LData = new GridData();
+				label4LData.horizontalAlignment = GridData.FILL;
+				label4LData.grabExcessHorizontalSpace = true;
+				label4LData.verticalAlignment = GridData.END;
+				label4.setLayoutData(label4LData);
+			}
+			{
+				button1 = new Button(this, SWT.PUSH | SWT.CENTER);
+				button1.setText("IMDB");
+				GridData button1LData = new GridData();
+				button1LData.verticalAlignment = GridData.END;
+				button1LData.horizontalAlignment = GridData.END;
+				button1.setLayoutData(button1LData);
 			}
 			this.layout();
 			// pack();

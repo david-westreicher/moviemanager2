@@ -1,42 +1,29 @@
 package mvcMovieManager;
 
-import java.util.ArrayList;
+import init.Main;
+
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import org.eclipse.swt.SWT;
 
-
 import tools.Stoppable;
 import movie.Movie;
 import mvcMovieList.CMovieList;
-import mvcMovieList.GMovieList;
 import mvcMovieList.MMovieList;
 import mvcSearchBar.CSearchBar;
 import mvcSearchBar.MSearchBar;
 
-public class CMovieManager implements Stoppable, Observer {
-	public static final int MMHeight = 800;
-	public static final int MMWidth = 500;
-
-	private GMovieManager gui;
+public abstract class CMovieManager implements Stoppable, Observer {
 	private MMovieManager model;
-	private CSearchBar searchBar;
-	private CMovieList movieList;
+	protected CSearchBar searchBar;
+	protected CMovieList movieList;
 
-	public CMovieManager(List<Movie> movies, ArrayList<String> toScan) {
-		this.gui = GMovieManager.showGUI();
+	public CMovieManager(List<Movie> movies, List<String> toScan) {
 		this.model = new MMovieManager(toScan);
-		this.searchBar = new CSearchBar(GMovieManager.composite1,
-				new MSearchBar(), this);
-		this.movieList = new CMovieList(new GMovieList(
-				GMovieManager.composite2, SWT.NONE), new MMovieList());
 		model.addObserver(this);
 		model.scan();
-		gui.layout();
-		movieList.initMovies(movies);
-		GMovieManager.show();
 	}
 
 	public void search(String filterKey) {
@@ -46,6 +33,8 @@ public class CMovieManager implements Stoppable, Observer {
 	public void stop() {
 		searchBar.stop();
 		model.stop();
+		Main.saveDB();
+		Main.exit();
 	}
 
 	@Override
@@ -58,4 +47,5 @@ public class CMovieManager implements Stoppable, Observer {
 		return movieList.getMovies();
 	}
 
+	public abstract IGMovieManager getGUI();
 }

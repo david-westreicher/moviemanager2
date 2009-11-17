@@ -8,6 +8,7 @@ import movie.Movie;
 public class MMovieList {
 	private List<Movie> allMovies;
 	private String filterKey;
+	public int movieNum;
 
 	public MMovieList() {
 		allMovies = new ArrayList<Movie>();
@@ -19,24 +20,23 @@ public class MMovieList {
 			allMovies.add(m);
 			if (filterKey.equals(""))
 				return null;
-			return search(filterKey);
+			if (m.search(filterKey))
+				return search(filterKey);
+			else
+				return new ArrayList<Movie>();
 		}
 		return null;
 	}
 
 	public List<Movie> search(String key) {
-		System.out.println("searching for " + key);
 		this.filterKey = key;
 		if (key.equals(""))
 			return allMovies;
 		else {
-			long start = System.currentTimeMillis();
 			List<Movie> result = new ArrayList<Movie>();
 			for (Movie m : allMovies)
 				if (m.search(key))
 					result.add(m);
-			System.out.println("searched in "
-					+ (System.currentTimeMillis() - start));
 			return result;
 		}
 	}

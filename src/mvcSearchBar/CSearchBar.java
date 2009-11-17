@@ -18,31 +18,18 @@ import tools.Stoppable;
 
 import mvcMovieManager.CMovieManager;
 
-public class CSearchBar implements ModifyListener, Observer, Stoppable {
-
-	private Text gui;
-	private MSearchBar model;
+public abstract class CSearchBar implements Observer, Stoppable {
+	protected MSearchBar model;
 	private CMovieManager parent;
 
-	public CSearchBar(Composite parent, MSearchBar mSearchBar,
-			CMovieManager mmController) {
-		this.gui = new Text(parent,SWT.NONE);
-		this.model = mSearchBar;
+	public CSearchBar(CMovieManager mmController) {
+		this.model = new MSearchBar();
 		this.parent = mmController;
 		init();
 	}
 
 	private void init() {
-		Font f = new Font(Display.getDefault(), new FontData(Appearance.TITLE_FONT,30,SWT.BOLD));
-		gui.setFont(f);
-		gui.setText(model.getFilterKey());
-		gui.addModifyListener(this);
 		model.addObserver(this);
-	}
-
-	@Override
-	public void modifyText(ModifyEvent arg0) {
-		model.filterKeyChanged(gui.getText());
 	}
 
 	@Override

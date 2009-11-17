@@ -1,6 +1,8 @@
 package mvcMovieManager;
 
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -22,13 +24,13 @@ import org.eclipse.swt.SWT;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
-public class GMovieManager extends org.eclipse.swt.widgets.Composite {
+public class GMovieManagerSWT extends org.eclipse.swt.widgets.Composite implements IGMovieManager{
 
 	private static Display display;
 	private static Shell shell;
 	public static Composite composite2;
 	public static Composite composite1;
-	private static GMovieManager instance;
+	private static GMovieManagerSWT instance;
 
 	/**
 	 * Auto-generated main method to display this
@@ -51,10 +53,10 @@ public class GMovieManager extends org.eclipse.swt.widgets.Composite {
 	 * 
 	 * @return
 	 */
-	public static GMovieManager showGUI() {
+	public static GMovieManagerSWT showGUI() {
 		display = Display.getDefault();
 		shell = new Shell(display);
-		instance = new GMovieManager(shell, SWT.NULL);
+		instance = new GMovieManagerSWT(shell, SWT.NONE);
 		Point size = instance.getSize();
 		shell.setLayout(new FillLayout());
 		shell.layout();
@@ -80,27 +82,40 @@ public class GMovieManager extends org.eclipse.swt.widgets.Composite {
 		}
 	}
 
-	public GMovieManager(org.eclipse.swt.widgets.Composite parent, int style) {
+	public GMovieManagerSWT(org.eclipse.swt.widgets.Composite parent, int style) {
 		super(parent, style);
 		initGUI();
 	}
 
-	private void initGUI() {
+	private void initGUI() { 
 		try {
-			this.setSize(CMovieManager.MMWidth, CMovieManager.MMHeight);
-			this.setLayout(null);
+			this.setSize(500,500);
+			GridLayout thisLayout = new GridLayout();
+			thisLayout.makeColumnsEqualWidth = true;
+			this.setLayout(thisLayout);
 			{
 				composite1 = new Composite(this, SWT.NONE);
 				FillLayout composite1Layout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);
 				composite1.setLayout(composite1Layout);
-				composite1.setBounds(0, 0, 500, 64);
+				GridData composite1LData = new GridData();
+				composite1LData.horizontalAlignment = GridData.FILL;
+				composite1LData.verticalAlignment = GridData.BEGINNING;
+				composite1LData.grabExcessHorizontalSpace = true;
+				composite1.setLayoutData(composite1LData);
+				//composite1.setBounds(0, 0, 500, 64);
 			}
 			{
 				composite2 = new Composite(this, SWT.NONE);
 				FillLayout composite2Layout = new FillLayout(org.eclipse.swt.SWT.HORIZONTAL);
 				composite2.setLayout(composite2Layout);
-				composite2.setBounds(0, 76, 500, 724);
+				GridData composite2LData = new GridData();
+				composite2LData.horizontalAlignment = GridData.FILL;
+				composite2LData.grabExcessHorizontalSpace = true;
+				composite2LData.verticalAlignment = GridData.FILL;
+				composite2LData.grabExcessVerticalSpace = true;
+				composite2.setLayoutData(composite2LData);
 			}
+			//pack();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

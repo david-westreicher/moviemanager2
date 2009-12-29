@@ -22,7 +22,8 @@ public class CMovieCompositeSWT extends CMovieComposite implements
 
 	public CMovieCompositeSWT(CMovieListSWT parent, Movie m) {
 		super(parent, m);
-		this.gui = new GMovieCompositeSWT(parent.getGUI().composite1, SWT.BORDER | SWT.PUSH);
+		this.gui = new GMovieCompositeSWT(parent.getGUI().composite1,
+				SWT.BORDER | SWT.PUSH);
 		super.init();
 		init2();
 	}
@@ -34,7 +35,7 @@ public class CMovieCompositeSWT extends CMovieComposite implements
 		composite1LData.grabExcessHorizontalSpace = true;
 		gui.setLayoutData(composite1LData);
 		gui.label1.addMouseListener(this);
-		if (model.coverLoaded()) {
+		if (model.getMovie().getCoverLocal() != null) {
 			setImg();
 		} else
 			gui.label1.setImage(new Image(Display.getDefault(), IO
@@ -53,8 +54,8 @@ public class CMovieCompositeSWT extends CMovieComposite implements
 
 	protected void setImg() {
 		if (!gui.isDisposed())
-			gui.label1
-					.setImage(new Image(Display.getDefault(), model.getImg()));
+			gui.label1.setImage(new Image(Display.getDefault(), model
+					.getMovie().getFileLocation()));
 	}
 
 	@Override

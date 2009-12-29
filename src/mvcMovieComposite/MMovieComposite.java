@@ -13,17 +13,25 @@ public class MMovieComposite extends Observable implements Observer {
 	private Movie movie;
 
 	public MMovieComposite(final Movie m) {
+		setMovie(m);
+	}
+
+	public MMovieComposite() {
+	}
+
+	public void setMovie(Movie m) {
 		this.movie = m;
 		movie.addObserver(this);
+		movie.loadImg();
 	}
-	
-	public void downloadImg(){
+
+	public void downloadImg() {
 		movie.loadImg();
 	}
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		//download complete
+		// download complete
 		new GUIAccess() {
 			@Override
 			protected void execute() {
@@ -31,14 +39,6 @@ public class MMovieComposite extends Observable implements Observer {
 				notifyObservers();
 			}
 		};
-	}
-
-	public String getImg() {
-		return movie.getCoverLocal();
-	}
-
-	public boolean coverLoaded() {
-		return movie.getCoverLocal()!=null;
 	}
 
 	public void play() {

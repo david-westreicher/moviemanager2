@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 
+import tools.GUIAccess;
 import tools.Stoppable;
 
 import mvcMovieManager.CMovieManager;
@@ -35,7 +36,12 @@ public abstract class CSearchBar implements Observer, Stoppable {
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		// key has changed, tell main application
-		parent.search(model.getFilterKey());
+		new GUIAccess() {
+			@Override
+			protected void execute() {
+				parent.search(model.getFilterKey());
+			}
+		};
 	}
 
 	public void stop() {

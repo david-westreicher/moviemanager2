@@ -25,7 +25,6 @@ public class FileDB {
 			for (int i = 0; i < length; i++)
 				movies.add((Movie) objstream.readObject());
 			objstream.close();
-			return movies;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -33,7 +32,7 @@ public class FileDB {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return movies;
 	}
 
 	public static boolean store(Movie[] movies) {

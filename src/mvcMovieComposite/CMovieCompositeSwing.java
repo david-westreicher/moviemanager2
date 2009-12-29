@@ -12,7 +12,10 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import movie.Movie;
+import mvcMovieList.CMovieList;
 import mvcMovieList.CMovieListSwing;
+import mvcMovieManager.CMovieManager;
+import mvcMovieManager.CMovieManagerSwing;
 
 import oldgui.Appearance;
 
@@ -26,28 +29,31 @@ public class CMovieCompositeSwing extends CMovieComposite implements
 
 	private GMovieCompositeSwing gui;
 
-	public CMovieCompositeSwing(CMovieListSwing parent, Movie m) {
-		super(parent, m);
+	public CMovieCompositeSwing(CMovieManagerSwing parent) {
+		super(parent);
 		this.gui = new GMovieCompositeSwing();
 		super.init();
-		init2();
+		parent.getGUI().add(gui, "0,2,f,f");
 	}
 
-	private void init2() {
+	private void updateUI() {
 		gui.setBorder(BorderFactory.createLineBorder(Color.black));
 		gui.jLabel1.addMouseListener(this);
 		GMovieInformationSwing comp = gui.gMovieInformationSwing1;
 		Movie m = model.getMovie();
 		comp.jTextField1.setText(m.getName());
-		comp.jLabel1.setText(Appearance.handleList(m.getDirector())
-				+ ", written by " + Appearance.handleList(m.getWriter()));
+		String dir = Appearance.handleList(m.getDirector());
+		if (m.getWriter().size() > 0)
+			dir += ", written by " + Appearance.handleList(m.getWriter());
+		comp.jLabel1.setText(dir);
 		comp.jProgressBar1.setValue((int) (m.getRating() * 10));
 		comp.jButton1.setText(m.getImdbURL());
 		comp.jButton1.addActionListener(this);
 		comp.jButton1.setEnabled(true);
 		comp.jLabel2.setText(m.getRuntime());
 		comp.jLabel3.setText(Appearance.handleList(m.getActors()));
-		if (model.coverLoaded()) {
+		comp.jTextPane1.setText(m.getPlot());
+		if (model.getMovie().getCoverLocal() != null) {
 			setImg();
 		} else {
 			gui.jLabel1.setIcon(new ImageIcon(Files.NO_POSTER));
@@ -79,22 +85,23 @@ public class CMovieCompositeSwing extends CMovieComposite implements
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		System.out.println("asd2");
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		System.out.println("asd1");
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		System.out.println("asd3");
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		System.out.println("asd4");
+	}
+
+	public void showMovie(Movie movie) {
+		model.setMovie(movie);
+		updateUI();
 	}
 
 }

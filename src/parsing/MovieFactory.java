@@ -220,16 +220,26 @@ public class MovieFactory {
 							log("Plot");
 							new AbstractRecursivePerform(node.getNextSibling()
 									.getChildren()) {
+								int i = 0;
+
 								@Override
 								public void perform(Node node) {
-									m.setPlot(node.getText());
+									if (i++ == 0) {
+										m.setPlot(node.getText());
+									}
 									log(node.getText());
 								}
 							};
 
 						} else if (txt.startsWith("Runtime")) {
 							log("Runtime:");
-							m.setRuntime(node.getNextSibling().getText());
+							new AbstractRecursivePerform(node.getNextSibling()
+									.getChildren()) {
+								@Override
+								public void perform(Node node) {
+									m.setRuntime(node.getText());
+								}
+							};
 							log(node.getNextSibling().getText());
 						} else if (txt.startsWith("Countr")) {
 							log("Country:");

@@ -15,12 +15,12 @@ public abstract class GUIAccess {
 				}
 			});
 		else if (Settings.CURRENT_STYLE == Settings.GuiStyle.SWING) {
-			//SwingUtilities.invokeLater(new Runnable() {
-			//	@Override
-			//	public void run() {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
 					execute();
-			//	}
-			//});
+				}
+			});
 		}
 	}
 

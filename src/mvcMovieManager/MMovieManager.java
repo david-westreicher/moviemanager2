@@ -28,12 +28,18 @@ public class MMovieManager extends Observable implements Stoppable {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				for (String s : toScan) {
 					try {
 						if (running) {
 							Movie m = new MovieFactory(Files.MOVIE_FOLDER
 									+ OS.SEPARATOR + s).getMovie(s);
 							if (running) {
+								System.out.println(m);
 								setMovie(m);
 								setChanged();
 								new GUIAccess() {

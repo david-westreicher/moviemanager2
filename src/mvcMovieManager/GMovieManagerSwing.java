@@ -1,4 +1,5 @@
 package mvcMovieManager;
+
 import info.clearthought.layout.TableLayout;
 
 import java.awt.BorderLayout;
@@ -51,9 +52,13 @@ public class GMovieManagerSwing extends javax.swing.JFrame implements
 		try {
 			this.setBounds(0, 0, 600, 800);
 			this.setSize(600, 800);
-			this.setMinimumSize(new Dimension(600,800));
+			this.setMinimumSize(new Dimension(600, 800));
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			TableLayout thisLayout = new TableLayout(new double[][] {{TableLayout.FILL}, {TableLayout.PREFERRED, TableLayout.FILL}});
+			TableLayout thisLayout = new TableLayout(
+					new double[][] {
+							{ TableLayout.FILL },
+							{ TableLayout.PREFERRED, TableLayout.FILL,
+									TableLayout.FILL } });
 			thisLayout.setHGap(5);
 			thisLayout.setVGap(5);
 			getContentPane().setLayout(thisLayout);

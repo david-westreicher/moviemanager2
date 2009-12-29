@@ -10,6 +10,7 @@ import org.eclipse.swt.SWT;
 
 import tools.Stoppable;
 import movie.Movie;
+import mvcMovieComposite.CMovieCompositeSwing;
 import mvcMovieList.CMovieList;
 import mvcMovieList.MMovieList;
 import mvcSearchBar.CSearchBar;
@@ -19,6 +20,7 @@ public abstract class CMovieManager implements Stoppable, Observer {
 	private MMovieManager model;
 	protected CSearchBar searchBar;
 	protected CMovieList movieList;
+	protected CMovieCompositeSwing movieComposite;
 
 	public CMovieManager(List<Movie> movies, List<String> toScan) {
 		this.model = new MMovieManager(toScan);
@@ -48,4 +50,8 @@ public abstract class CMovieManager implements Stoppable, Observer {
 	}
 
 	public abstract IGMovieManager getGUI();
+
+	public void showMovie(Movie movie) {
+		movieComposite.showMovie(movie);
+	}
 }

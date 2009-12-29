@@ -204,6 +204,7 @@ public class Movie extends Observable implements Serializable,
 	}
 
 	public String getCoverLocal() {
+		System.out.println("coverlocal: " + coverLocal);
 		return coverLocal;
 	}
 
@@ -292,6 +293,6 @@ public class Movie extends Observable implements Serializable,
 
 	@Override
 	public int compareTo(Movie o) {
-		return	Float.compare(o.rating, rating);
+		return Float.compare(o.rating, rating);
 	}
 }

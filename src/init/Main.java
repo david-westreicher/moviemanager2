@@ -72,6 +72,7 @@ public class Main {
 
 	private static void folderStructure() {
 		System.out.println("slow-loading the movies");
+		movies = new ArrayList<Movie>();
 		toScan = OS.getFolders(Files.MOVIE_FOLDER);
 		System.out.println(toScan);
 	}

@@ -22,8 +22,10 @@ public abstract class CMovieList {
 
 	protected static final int MAX_MOVIE_COMPOSITES = 100;
 	protected MMovieList model;
+	protected CMovieManager parent;
 
 	public CMovieList(CMovieManager par) {
+		this.parent = par;
 		this.model = new MMovieList();
 	}
 

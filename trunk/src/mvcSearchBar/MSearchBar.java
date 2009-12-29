@@ -22,12 +22,7 @@ public class MSearchBar extends Observable implements Stoppable {
 					Thread.sleep(UPDATE_TIME);
 					if (hasChanged) {
 						setChanged();
-						new GUIAccess() {
-							@Override
-							protected void execute() {
-								notifyObservers();
-							}
-						};
+						notifyObservers();
 						hasChanged = false;
 					}
 				} catch (InterruptedException e) {

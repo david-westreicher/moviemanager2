@@ -15,6 +15,9 @@ import org.eclipse.swt.widgets.Display;
 
 import movie.Movie;
 import mvcMovieList.CMovieList;
+import mvcMovieList.CMovieListSWT;
+import mvcMovieManager.CMovieManager;
+import mvcMovieManager.CMovieManagerSwing;
 import system.Files;
 import system.IO;
 
@@ -22,13 +25,16 @@ public abstract class CMovieComposite implements Observer {
 
 	protected MMovieComposite model;
 
+	public CMovieComposite(CMovieManager parent) {
+		this.model = new MMovieComposite();
+	}
+
 	public CMovieComposite(CMovieList parent, Movie m) {
-		this.model = new MMovieComposite(m);
+		// TODO Auto-generated constructor stub
 	}
 
 	public void init() {
 		model.addObserver(this);
-		model.downloadImg();
 	}
 
 	protected abstract void setImg();
@@ -38,6 +44,5 @@ public abstract class CMovieComposite implements Observer {
 		// download complete
 		setImg();
 	}
-
 
 }

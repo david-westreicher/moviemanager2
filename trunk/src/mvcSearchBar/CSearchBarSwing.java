@@ -21,7 +21,7 @@ public class CSearchBarSwing extends CSearchBar implements DocumentListener {
 		this.gui = new JTextField("");
 		gui.getDocument().addDocumentListener(this);
 		gui.setVisible(true);
-		gui.setFont(new Font("Serif", Font.BOLD, 35));
+		gui.setFont(new Font("Serif", Font.BOLD, 25));
 		gui.setPreferredSize(new Dimension(500, 45));
 		par.getGUI().getContentPane().add(gui, "0,0,f,c");
 	}

@@ -6,6 +6,7 @@ import info.clearthought.layout.TableLayout;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -57,8 +58,8 @@ public class GMovieCompositeSwing extends javax.swing.JPanel {
 			this.setLayout(thisLayout);
 			{
 				jLabel1 = new JLabel();
-				this.add(jLabel1, "0,0,l,c");
-				jLabel1.setPreferredSize(new Dimension(99,140));
+				this.add(jLabel1, "0,0,l,t");
+				//jLabel1.setPreferredSize(new Dimension(99,140));
 			}
 			{
 				gMovieInformationSwing1 = new GMovieInformationSwing();

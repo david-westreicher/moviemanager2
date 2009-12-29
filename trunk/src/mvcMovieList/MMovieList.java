@@ -2,6 +2,10 @@ package mvcMovieList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
+import tools.GUIAccess;
 
 import movie.Movie;
 
@@ -48,5 +52,4 @@ public class MMovieList {
 	public List<Movie> getMovies() {
 		return allMovies;
 	}
-
 }
